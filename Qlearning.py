@@ -40,20 +40,20 @@ class Qlearning:
     def acciones_posibles(self, estado):
         # FIXME Se puede optimizar usando la libreria gym
         # Devuelve acciones posibles para el estado
-
         # Hallamos coordenadas
         col = estado % 4
         fila = estado // 4 # div. entera
+        #Dimension del tablero, o, ultimo indice del tablero cuadrado
+        dim = np.sqrt((self.matriz_q.shape[0])) - 1
         acciones = list()
-        if (col != 0): # podemos ir a la izquierda
+        if (col != 0):  # podemos ir a la izquierda
             acciones.append(0)
-        if (fila != (self.matriz_q.shape[0]) - 1): # podemos ir abajo
+        if (fila != dim):  # podemos ir abajo
             acciones.append(1)
-        if (col != (self.matriz_q.shape[1]) - 1): # podemos ir a la derecha
+        if (col != dim):  # podemos ir a la derecha
             acciones.append(2)
-        if (fila != 0): # podemos ir arriba
+        if (fila != 0):  # podemos ir arriba
             acciones.append(3)
-
         return acciones
 
     def resetear_entorno(self):
