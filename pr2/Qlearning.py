@@ -11,6 +11,8 @@ class Qlearning:
         self.env = env
         self.max_steps = max_steps
         # Configuracion interna
+        env.action_space.seed(7)
+        random.seed(7)
         self.epsilon = epsilon
 
 
@@ -33,32 +35,15 @@ class Qlearning:
 
     def hacer_explotacion(self, estado):
         ''' Acción que maximiza Q en el estado actual (siempre posible de realizar)'''
-        posibles =  self.acciones_posibles(estado)
-        fila_q_posibles = self.matriz_q[estado, posibles]
-        return posibles[np.argmax(fila_q_posibles)]  # primer max de la fila que corresponde al estado.
+        #posibles =  self.acciones_posibles(estado)
+        #fila_q_posibles = self.matriz_q[estado, posibles]
+        return np.argmax(estado)  # primer max de la fila que corresponde al estado.
 
     def hacer_exploracion(self, estado):
         ''' Accion aleatoria (siempre posible de realizar)'''
-        return random.choice(self.acciones_posibles(estado))
+        return self.env.action_space.sample()
 
-    def acciones_posibles(self, estado):
-        '''Devuelve acciones posibles para el estado dado'''
 
-        # Hallamos coordenadas
-        col = estado % 4
-        fila = estado // 4 # div. entera
-        acciones = list()
-        dim = np.sqrt(self.matriz_q.shape[0]) - 1
-        if (col != 0): # podemos ir a la izquierda
-            acciones.append(0)
-        if (fila != dim): # podemos ir abajo
-            acciones.append(1)
-        if (col != dim): # podemos ir a la derecha
-            acciones.append(2)
-        if (fila != 0): # podemos ir arriba
-            acciones.append(3)
-
-        return acciones
 
     def resetear_entorno(self):
         return self.env.reset()[0]
@@ -69,7 +54,7 @@ class Qlearning:
 
     def calcular_matriz_q(self, s, s_next, accion, recompensa, alpha, gamma):
         '''Actualiza la matriz Q segun los parámetros proporcionados.'''
-        max_q_next = max(self.matriz_q[s_next, self.acciones_posibles(s_next)])
+        max_q_next = max(self.matriz_q[s_next])
         self.matriz_q[s, accion] = (1 - alpha) * self.matriz_q[s, accion] + alpha * (recompensa + gamma * max_q_next)
         #return matriz_q_nueva
 
