@@ -37,7 +37,7 @@ class Qlearning:
         ''' Acción que maximiza Q en el estado actual (siempre posible de realizar)'''
         #posibles =  self.acciones_posibles(estado)
         #fila_q_posibles = self.matriz_q[estado, posibles]
-        return np.argmax(estado)  # primer max de la fila que corresponde al estado.
+        return np.argmax(self.matriz_q[estado])  # primer max de la fila que corresponde al estado.
 
     def hacer_exploracion(self, estado):
         ''' Accion aleatoria (siempre posible de realizar)'''
