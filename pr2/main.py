@@ -1,5 +1,5 @@
 from gym.envs.toy_text.frozen_lake import generate_random_map
-import gym as gym
+import gymnasium as gym
 import pygame # hace falta para pintar el tablero graficamente en una ventanita
 from Qlearning import *
 
